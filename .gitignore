@@ -1,0 +1,11 @@
+*
+!*/
+
+
+# allow these files
+
+!.gitignore
+!*.yaml
+!*.tf
+!*.tfvars
+!*.md
