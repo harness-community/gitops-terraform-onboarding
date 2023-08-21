@@ -17,4 +17,8 @@ provider "harness" {
     platform_api_key = var.harness_api_token 
 }
 
+provider "kubectl" {
+  load_config_file = true
+}
+
 
