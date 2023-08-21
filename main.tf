@@ -19,9 +19,12 @@ data "harness_platform_gitops_agent_deploy_yaml" "tf_gitops_tutorial_agent_yaml"
   namespace  = "default"
 }
 
-output "gitops_agent_yaml" {
-  value = data.harness_platform_gitops_agent_deploy_yaml.tf_gitops_tutorial_agent_yaml.yaml
+resource "kubectl_manifest" "gitops_agent_cluster_deployment" {
+    yaml_body = <<YAML
+${data.harness_platform_gitops_agent_deploy_yaml.tf_gitops_tutorial_agent_yaml.yaml}
+YAML
 }
+
 resource "harness_platform_gitops_repository" "tf_gitops_tutorial_repo" {
   identifier = ""
   account_id = ""
@@ -59,4 +62,8 @@ resource "harness_platform_gitops_cluster" "tf_gitops_tutorial_cluster" {
 
     }
   }
+}
+
+output "gitops_agent_yaml" {
+  value = data.harness_platform_gitops_agent_deploy_yaml.tf_gitops_tutorial_agent_yaml.yaml
 }

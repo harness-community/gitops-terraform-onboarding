@@ -4,6 +4,10 @@ terraform {
             source = "harness/harness"  
             version = "0.24.2"  
         }
+        kubectl = {
+            source  = "gavinbunney/kubectl"
+            version = ">= 1.14.0"
+        }
     }
 }  
 
@@ -12,3 +16,5 @@ provider "harness" {
     account_id = ""  
     platform_api_key    = ""  
 }
+
+
