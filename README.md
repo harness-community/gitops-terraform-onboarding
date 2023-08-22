@@ -1,6 +1,15 @@
 # Harness GitOps onboarding via Terraform
 
-## WIP high level instructions
+## Summary
+
+This project automates the GitOps workflow steps of the [Harness Guestbook app CD tutorial](https://developer.harness.io/tutorials/cd-pipelines/kubernetes/manifest/) using Terraform. The Tf module:
+
+- Provisions the GitOps agent in Harness
+- Installs the agent in a local Kubernetes cluster
+- Creates Harness repo, cluster, environment, and service resources
+- Deploys and syncronizes the guestbook application to the cluster.
+
+## High level instructions
 
 ### Provisioning
 1. Clone this repo to a machine that has Terraform command line tools installed, and can connect to a local K8 cluster.
