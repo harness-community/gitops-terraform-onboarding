@@ -58,6 +58,16 @@ variable "env_identifier" {
     default = ""
 }
 
+variable "env_name" {
+    type = string
+    default = ""
+}
+
+variable "service_name" {
+    type = string
+    default = ""
+}
+
 variable "harness_api_token" {
     type = string
     default = ""
