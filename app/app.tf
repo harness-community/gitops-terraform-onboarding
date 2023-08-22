@@ -35,6 +35,7 @@ resource "harness_platform_gitops_cluster" "tf_gitops_tutorial_cluster" {
 
     }
   }
+  depends_on = [harness_platform_gitops_repository.tf_gitops_tutorial_repo]
 }
 
 resource "harness_platform_service" "gitops_guestbook_service" {
@@ -45,13 +46,14 @@ resource "harness_platform_service" "gitops_guestbook_service" {
   project_id  = var.project_id
   yaml = <<-EOT
          service:
-           name: var.service_name
-           identifier: var.service_name
+           name: testservice
+           identifier: testservice
            serviceDefinition:
              type: Kubernetes
              spec: {}
            gitOpsEnabled: true     
          EOT
+  depends_on = [harness_platform_gitops_cluster.tf_gitops_tutorial_cluster]
 }
 
 resource "harness_platform_environment" "gitops_guestbook_env" {
@@ -62,15 +64,16 @@ resource "harness_platform_environment" "gitops_guestbook_env" {
   type       = "PreProduction"
   yaml = <<-EOT
          environment:
-           name: var.env_name
-           identifier: var.env_name
+           name: testenv
+           identifier: testenv
            description: ""
            tags: {}
            type: PreProduction
-           orgIdentifier: var.org_id
-           projectIdentifier: var.project_id
+           orgIdentifier: default
+           projectIdentifier: default_project
            variables: []
        EOT
+  depends_on = [harness_platform_gitops_cluster.tf_gitops_tutorial_cluster]
 }
 
 
@@ -79,13 +82,16 @@ resource "harness_platform_gitops_applications" "guestbook" {
     metadata {
       annotations = {}
       labels = {
-        "harness.io/serviceRef" = var.service_name
-        "harness.io/envRef"     = var.env_name
+        "harness.io/serviceRef" = "testservice"
+        "harness.io/envRef"     = "testenv"
       }
     name = "guestbook"
     }
     spec {
       sync_policy {
+        automated {
+          self_heal = true
+        }
         sync_options = [
           "PrunePropagationPolicy=undefined",
           "CreateNamespace=false",
@@ -118,6 +124,7 @@ resource "harness_platform_gitops_applications" "guestbook" {
   repo_id    = var.repo_identifier
   agent_id   = var.agent_identifier
   name       = "guestbook"
+  depends_on = [harness_platform_service.gitops_guestbook_service]
 }
 
 

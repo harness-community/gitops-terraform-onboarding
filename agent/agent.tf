@@ -23,3 +23,22 @@ resource "local_file" "gitops_agent_yaml" {
   filename = "gitops_agent.yaml"
   content  = data.harness_platform_gitops_agent_deploy_yaml.tf_gitops_tutorial_agent_yaml.yaml
 }
+
+resource "null_resource" "deploy_agent_resources_to_cluster" {
+  triggers = {
+    content = local_file.gitops_agent_yaml.content
+  }
+  provisioner "local-exec" {
+    when = create
+    command = "kubectl apply -f gitops_agent.yaml"
+  }
+  depends_on = [local_file.gitops_agent_yaml]
+}
+
+resource "null_resource" "remove_agent_resources_from_cluster" {
+  provisioner "local-exec" {
+    when = destroy
+    command = "kubectl delete -f gitops_agent.yaml"
+  }
+  depends_on = [local_file.gitops_agent_yaml]
+}
