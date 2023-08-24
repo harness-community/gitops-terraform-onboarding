@@ -3,8 +3,8 @@ resource "harness_platform_gitops_applications" "guestbook" {
     metadata {
       annotations = {}
       labels = {
-        "harness.io/serviceRef" = "testservice"
-        "harness.io/envRef"     = "testenv"
+        "harness.io/serviceRef" = var.service_name
+        "harness.io/envRef"     = var.env_name
       }
     name = "guestbook"
     }

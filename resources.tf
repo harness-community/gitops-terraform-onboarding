@@ -1,4 +1,4 @@
-resource "harness_platform_gitops_repository" "tf_gitops_tutorial_repo" {
+Resource "harness_platform_gitops_repository" "gitops_repo" {
   identifier = var.repo_identifier
   account_id = var.account_id
   project_id = var.project_id
@@ -15,7 +15,7 @@ resource "harness_platform_gitops_repository" "tf_gitops_tutorial_repo" {
   depends_on = [null_resource.deploy_agent_resources_to_cluster]
 }
 
-resource "harness_platform_gitops_cluster" "tf_gitops_tutorial_cluster" {
+resource "harness_platform_gitops_cluster" "gitops_cluster" {
   identifier = var.cluster_identifier
   account_id = var.account_id
   project_id = var.project_id
@@ -36,7 +36,7 @@ resource "harness_platform_gitops_cluster" "tf_gitops_tutorial_cluster" {
 
     }
   }
-  depends_on = [harness_platform_gitops_repository.tf_gitops_tutorial_repo]
+  depends_on = [harness_platform_gitops_repository.gitops_repo]
 }
 
 resource "harness_platform_service" "gitops_guestbook_service" {
@@ -54,7 +54,7 @@ resource "harness_platform_service" "gitops_guestbook_service" {
              spec: {}
            gitOpsEnabled: true     
          EOT
-  depends_on = [harness_platform_gitops_cluster.tf_gitops_tutorial_cluster]
+  depends_on = [harness_platform_gitops_cluster.gitops_cluster]
 }
 
 resource "harness_platform_environment" "gitops_guestbook_env" {
@@ -74,6 +74,6 @@ resource "harness_platform_environment" "gitops_guestbook_env" {
            projectIdentifier: default_project
            variables: []
        EOT
-  depends_on = [harness_platform_gitops_cluster.tf_gitops_tutorial_cluster]
+  depends_on = [harness_platform_gitops_cluster.gitops_cluster]
 }
 

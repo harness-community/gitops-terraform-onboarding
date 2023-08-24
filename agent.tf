@@ -1,4 +1,4 @@
-resource "harness_platform_gitops_agent" "tf_gitops_tutorial_agent" {
+resource "harness_platform_gitops_agent" "gitops_agent" {
   identifier = var.agent_identifier
   account_id = var.account_id
   project_id = var.project_id
@@ -11,7 +11,7 @@ resource "harness_platform_gitops_agent" "tf_gitops_tutorial_agent" {
   }
 }
 
-data "harness_platform_gitops_agent_deploy_yaml" "tf_gitops_tutorial_agent_yaml" {
+data "harness_platform_gitops_agent_deploy_yaml" "gitops_agent_yaml" {
   identifier = "${harness_platform_gitops_agent.tf_gitops_tutorial_agent.identifier}"
   account_id = var.account_id
   project_id = var.project_id
@@ -19,20 +19,20 @@ data "harness_platform_gitops_agent_deploy_yaml" "tf_gitops_tutorial_agent_yaml"
   namespace  = var.agent_namespace
 }
 
-resource "local_file" "gitops_agent_yaml" {
+resource "local_file" "gitops_agent_yaml_file" {
   filename = "gitops_agent.yaml"
-  content  = data.harness_platform_gitops_agent_deploy_yaml.tf_gitops_tutorial_agent_yaml.yaml
+  content  = data.harness_platform_gitops_agent_deploy_yaml.gitops_agent_yaml.yaml
 }
 
 resource "null_resource" "deploy_agent_resources_to_cluster" {
   triggers = {
-    content = local_file.gitops_agent_yaml.content
+    content = local_file.gitops_agent_yaml_file.content
   }
   provisioner "local-exec" {
     when = create
     command = "kubectl apply -f gitops_agent.yaml; sleep 60"
   }
-  depends_on = [local_file.gitops_agent_yaml]
+  depends_on = [local_file.gitops_agent_yaml_file]
 }
 
 resource "null_resource" "remove_agent_resources_from_cluster" {
@@ -40,5 +40,5 @@ resource "null_resource" "remove_agent_resources_from_cluster" {
     when = destroy
     command = "kubectl delete -f gitops_agent.yaml"
   }
-  depends_on = [local_file.gitops_agent_yaml]
+  depends_on = [local_file.gitops_agent_yaml_file]
 }
