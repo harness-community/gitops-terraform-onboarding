@@ -1,4 +1,4 @@
-Resource "harness_platform_gitops_repository" "gitops_repo" {
+resource "harness_platform_gitops_repository" "gitops_repo" {
   identifier = var.repo_identifier
   account_id = var.account_id
   project_id = var.project_id
