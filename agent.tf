@@ -30,7 +30,7 @@ resource "null_resource" "deploy_agent_resources_to_cluster" {
   }
   provisioner "local-exec" {
     when = create
-    command = "kubectl apply -f gitops_agent.yaml; sleep 40"
+    command = "kubectl apply -f gitops_agent.yaml; sleep 60"
   }
   depends_on = [local_file.gitops_agent_yaml]
 }
