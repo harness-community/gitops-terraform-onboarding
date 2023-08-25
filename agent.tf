@@ -12,7 +12,7 @@ resource "harness_platform_gitops_agent" "gitops_agent" {
 }
 
 data "harness_platform_gitops_agent_deploy_yaml" "gitops_agent_yaml" {
-  identifier = "${harness_platform_gitops_agent.tf_gitops_tutorial_agent.identifier}"
+  identifier = "${harness_platform_gitops_agent.gitops_agent.identifier}"
   account_id = var.account_id
   project_id = var.project_id
   org_id     = var.org_id
