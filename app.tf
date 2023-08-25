@@ -22,7 +22,7 @@ resource "harness_platform_gitops_applications" "guestbook" {
           "pruneLast=false",
           "applyOutofSyncOnly=false",
           "Replace=false",
-          "retry=false"
+          "retry=true"
         ]
       }
       source {
