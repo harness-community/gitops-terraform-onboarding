@@ -47,8 +47,8 @@ resource "harness_platform_service" "gitops_guestbook_service" {
   project_id  = var.project_id
   yaml = <<-EOT
          service:
-           name: testservice
-           identifier: testservice
+           name: podinfoservice
+           identifier: podinfoservice
            serviceDefinition:
              type: Kubernetes
              spec: {}
@@ -65,8 +65,8 @@ resource "harness_platform_environment" "gitops_guestbook_env" {
   type       = "PreProduction"
   yaml = <<-EOT
          environment:
-           name: testenv
-           identifier: testenv
+           name: podinfoenv
+           identifier: podinfoenv
            description: ""
            tags: {}
            type: PreProduction
