@@ -12,7 +12,7 @@ resource "harness_platform_gitops_repository" "gitops_repo" {
   }
   upsert = true
   gen_type = "UNSET"
- // depends_on = [null_resource.deploy_agent_resources_to_cluster]
+  depends_on = [null_resource.deploy_agent_resources_to_cluster]
 }
 
 resource "harness_platform_gitops_cluster" "gitops_cluster" {
@@ -47,8 +47,8 @@ resource "harness_platform_service" "gitops_guestbook_service" {
   project_id  = var.project_id
   yaml = <<-EOT
          service:
-           name: podinfoservice
-           identifier: podinfoservice
+           name: testservice
+           identifier: testservice
            serviceDefinition:
              type: Kubernetes
              spec: {}
@@ -65,8 +65,8 @@ resource "harness_platform_environment" "gitops_guestbook_env" {
   type       = "PreProduction"
   yaml = <<-EOT
          environment:
-           name: podinfoenv
-           identifier: podinfoenv
+           name: testenv
+           identifier: testenv
            description: ""
            tags: {}
            type: PreProduction
