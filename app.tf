@@ -6,7 +6,7 @@ resource "harness_platform_gitops_applications" "guestbook" {
         "harness.io/serviceRef" = var.service_name
         "harness.io/envRef"     = var.env_name
       }
-    name = "guestbook"
+    name = "podinfo"
     }
     spec {
       sync_policy {
@@ -28,7 +28,7 @@ resource "harness_platform_gitops_applications" "guestbook" {
       source {
         target_revision = "master"
         repo_url        = var.repo_url
-        path            = "guestbook"
+        path            = "kustomize"
 
       }
       destination {
@@ -40,10 +40,10 @@ resource "harness_platform_gitops_applications" "guestbook" {
   project_id = var.project_id
   org_id     = var.org_id
   account_id = var.account_id
-  identifier = "guestbook"
+  identifier = "podinfo"
   cluster_id = var.cluster_identifier
   repo_id    = var.repo_identifier
   agent_id   = var.agent_identifier
-  name       = "guestbook"
+  name       = "podinfo"
   depends_on = [harness_platform_service.gitops_guestbook_service]
 }
