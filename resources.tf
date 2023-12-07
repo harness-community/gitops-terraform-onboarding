@@ -12,7 +12,7 @@ resource "harness_platform_gitops_repository" "gitops_repo" {
   }
   upsert = true
   gen_type = "UNSET"
-  depends_on = [null_resource.deploy_agent_resources_to_cluster]
+ // depends_on = [null_resource.deploy_agent_resources_to_cluster]
 }
 
 resource "harness_platform_gitops_cluster" "gitops_cluster" {
